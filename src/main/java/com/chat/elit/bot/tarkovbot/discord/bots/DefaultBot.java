@@ -17,14 +17,18 @@ import net.dv8tion.jda.api.events.message.priv.PrivateMessageReceivedEvent;
 import net.dv8tion.jda.api.requests.GatewayIntent;
 import net.dv8tion.jda.api.requests.RestAction;
 import org.jetbrains.annotations.NotNull;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 
 @Component
 public class DefaultBot extends DiscordBot {
+    private static Logger log = LoggerFactory.getLogger(DefaultBot.class);
 
     @Autowired
     private MemoryService memoryService;
@@ -80,7 +84,11 @@ public class DefaultBot extends DiscordBot {
         }
 
         if (event.getMessage().getContentRaw().equals("!loadMemory")){
-            memoryService.loadMemoryCache();
+            try {
+                memoryService.loadMemoryCache();
+            } catch (IOException e) {
+                log.error("Unable to load cache :(. Error: " + e.getMessage());
+            }
             discordService.sendPrivateMessage(event.getAuthor(), "Memory successfully saved!");
         }
 

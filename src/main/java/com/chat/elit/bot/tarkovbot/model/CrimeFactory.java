@@ -25,4 +25,9 @@ public class CrimeFactory {
     public Crime getOldCrime(DiscordUser killer, DiscordUser victim, int seriousnessOfCrime, LocalDate crimeDate){
         return getSimpleCrime(killer, victim, seriousnessOfCrime).setCrimeDate(crimeDate);
     }
+
+    public void setCrimeId(int maxKnownCrimeId){
+        crimeId.set(maxKnownCrimeId);
+        crimeId.incrementAndGet();
+    }
 }

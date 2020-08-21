@@ -16,7 +16,7 @@ import javax.annotation.PostConstruct;
 @Service
 public class DiscordService extends ListenerAdapter {
     private static Logger log = LoggerFactory.getLogger(DiscordService.class);
-    private static String TOKEN = "";
+    private static String TOKEN = System.getProperty("com.chat.elit.bot.tarkovbot.token");
 
     public static String getCurrentToken(){
         return TOKEN;
